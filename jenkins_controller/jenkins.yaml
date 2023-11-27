@@ -40,11 +40,23 @@ credentials:
       - usernamePassword:
           description: "test_artifactory"
           id: "artifactory"
-          password: password
+          password: "password"
           scope: GLOBAL
           username: "admin"
 
 jenkins:
+  nodes:
+  - permanent:
+      labelString: "agent"
+      launcher:
+        ssh:
+          credentialsId: "private_key"
+          host: "192.168.44.44"
+          port: 2222
+          sshHostKeyVerificationStrategy: "nonVerifyingKeyVerificationStrategy"
+      name: "test"
+      remoteFS: "/home/jenkins/agent"
+      retentionStrategy: "always"
   numExecutors: 0
   securityRealm:
     local:
@@ -91,15 +103,3 @@ tool:
           - sonarRunnerInstaller:
               id: "5.0.1.3006"
 
-nodes:
-  - permanent:
-      labelString: "agent"
-      launcher:
-        ssh:
-          credentialsId: "private_key"
-          host: "192.168.44.44"
-          port: 2222
-          sshHostKeyVerificationStrategy: "nonVerifyingKeyVerificationStrategy"
-      name: "test"
-      remoteFS: "/home/jenkins/agent"
-      retentionStrategy: "always"
